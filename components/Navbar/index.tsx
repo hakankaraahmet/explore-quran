@@ -4,12 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
-import { INavbarItem, navbarItems } from "@/constants/navbarItems";
+import { INavbarItem, navbarItems } from "../../constants/navbarItems";
 import Tooltip from "../shared/Tooltip";
-import { outSideClick } from "@/utils/outSideClick";
+import { outSideClick } from "../../utils/outSideClick";
 
 const quranFont = localFont({
-  src: "../../../public/fonts/khodijah/Khodijah Free.ttf",
+  src: "../../public/fonts/khodijah/Khodijah Free.ttf",
 });
 
 const Navbar = () => {

@@ -1,9 +1,9 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "../components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Arimo } from "next/font/google";
-import Footer from "@/components/Footer";
-import { Providers } from "@/store/provider";
+import Footer from "../components/Footer";
+import { Providers } from "../store/provider";
 
 
 const arimo = Arimo({
