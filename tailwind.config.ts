@@ -17,8 +17,11 @@ const config: Config = {
       colors: {
         primary_color: '#e0dff7',
         secondary_color: '#0B152E',
-        tertiary_color : '#344768'
+        tertiary_color : '#1a2333'
       },
+      screens:{
+        '3xl': '3000px'
+      }
     },
   },
   plugins: [],
