@@ -1,0 +1,14 @@
+{
+  "navigation": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "translations": "Çeviriler",
+    "login": "Giriş yap",
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "german": "Almanca"
+  },
+  "page": {
+    "home": {}
+  }
+}

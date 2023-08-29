@@ -1,19 +1,20 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
-import { INavbarItem, navbarItems } from "../../constants/navbarItems";
-import Tooltip from "../shared/Tooltip";
-import { outSideClick } from "../../utils/outSideClick";
+import { INavbarItem, navbarItems } from "../../../constants/navbarItems";
+import Tooltip from "../../shared/Tooltip";
+import { outSideClick } from "../../../utils/outSideClick";
 
 const quranFont = localFont({
-  src: "../../public/fonts/khodijah/Khodijah Free.ttf",
+  src: "../../../public/fonts/khodijah/Khodijah Free.ttf",
 });
 
-const Navbar = () => {
+const Navbar = ({ languages }: { languages: any }) => {
   const pathName = usePathname();
+  const [activePathName, setActivePathName] = useState<string>("");
   const [tooltipValue, setTooltipValue] = useState<string>("");
   const translationRef = useRef<HTMLInputElement>(null);
 
@@ -21,8 +22,19 @@ const Navbar = () => {
     outSideClick(translationRef, setTooltipValue);
   }, [translationRef]);
 
-  //Translate ekle
+  // LANGUAGE SWITCHER
+  const redirectedPathName = (locale: string) => {
+    if (!pathName) return "/";
+    const segments = pathName.split("/");
+    segments[1] = locale;
+    return segments.join("/");
+  };
 
+  // ACTIVE PAGE
+  useEffect(() => {
+    const segments = pathName.split("/");
+    setActivePathName(segments.length > 2 ? `/${segments[2]}` : "/");
+  }, [pathName]);
 
   // eslint
   // desktop bolumu bittikten sonra bunlar sidebar icin constant dosyasina alinacak
@@ -32,7 +44,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`relative  flex flex-wrap items-center justify-between  py-3 bg-gradient-to-l from-tertiary_color to-secondary_color drop-shadow-xl ${quranFont.className}`}
+      className={`relative  flex flex-wrap items-center justify-between  py-3 bg-gradient-to-l from-tertiary_color to-secondary_color drop-shadow-xl `}
     >
       <div className="w-full mx-8 lg:mx-32 flex  items-center justify-between  3xl:w-2/3 3xl:mx-auto">
         <div className="w-full relative flex justify-between items-center ">
@@ -48,7 +60,7 @@ const Navbar = () => {
                 height={36}
               />
             </span>
-            <span className="mt-1">Explore Quran</span>
+            <span className={`mt-1 ${quranFont.className}`}>Explore Quran</span>
           </Link>
           <div className=" text-primary_color grid grid-cols-4 gap-x-8">
             {navbarItems.map((item: INavbarItem) =>
@@ -57,15 +69,15 @@ const Navbar = () => {
                   key={item.id}
                   href={item.link}
                   className={`relative ml-2 scale-150 lg:mt-[1px] cursor-pointer hover:opacity-100 ${
-                    item.link === pathName ? "opacity-100" : "opacity-60"
+                    item.link === activePathName ? "opacity-100" : "opacity-60"
                   }`}
-                  onMouseEnter={() => setTooltipValue(item.name)}
+                  onMouseEnter={() => setTooltipValue(languages[item?.name])}
                   onMouseLeave={() => setTooltipValue("")}
                 >
                   {item.icon}
                   <Tooltip
                     tooltipValue={tooltipValue}
-                    tooltipCheckValue={item.name}
+                    tooltipCheckValue={languages[item?.name]}
                   >
                     {tooltipValue}
                   </Tooltip>
@@ -87,26 +99,45 @@ const Navbar = () => {
                     tooltipCheckValue={item.name}
                   >
                     <div className=" flex flex-col text-[10px]">
-                      <div className="flex  items-center">
+                      <Link
+                        href={redirectedPathName("tr")}
+                        className="flex  items-center"
+                      >
                         <Image
                           src="/images/flagTurkey.svg"
-                          alt="Türkçe"
+                          alt={languages.turkish}
                           width={12}
                           height={6}
                           className="mr-2 -ml-2"
                         />
-                        Türkçe
-                      </div>
-                      <div className="flex items-center">
+                        {languages.turkish}
+                      </Link>
+                      <Link
+                        href={redirectedPathName("en")}
+                        className="flex items-center"
+                      >
                         <Image
                           src={"/images/flagBritain.svg"}
-                          alt={"English"}
+                          alt={languages.english}
                           width={12}
                           height={6}
                           className="mr-2 -ml-2"
                         />
-                        English
-                      </div>
+                        {languages.english}
+                      </Link>
+                      <Link
+                        href={redirectedPathName("de")}
+                        className="flex items-center"
+                      >
+                        <Image
+                          src={"/images/flagGermany.svg"}
+                          alt={languages.german}
+                          width={12}
+                          height={6}
+                          className="mr-2 -ml-2"
+                        />
+                        {languages.german}
+                      </Link>
                     </div>
                   </Tooltip>
                 </span>

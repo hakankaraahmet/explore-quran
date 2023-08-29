@@ -1,0 +1,14 @@
+{
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "translations" : "translations",
+      "login" : "Login",
+      "english" : "English",
+      "turkish" : "Turkish",
+      "german" : "German"
+    },
+    "page": {
+      "home": {}
+    }
+  }

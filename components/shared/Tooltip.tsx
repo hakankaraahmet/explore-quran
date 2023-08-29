@@ -14,7 +14,7 @@ const Tooltip: FC<ITooltip> = ({
   return (
     <div className="absolute left-[50%] translate-x-[-50%] top-7 ">
       <span
-        className={`bg-primary_color border-primary_color shadow-2xl text-secondary_color relative px-4 text-md capitalize rounded-lg  border-t ${
+        className={`bg-primary_color text-xs border-primary_color shadow-2xl text-secondary_color relative px-4 text-md capitalize rounded-lg  border-t ${
           tooltipValue === tooltipCheckValue ? "block" : "hidden"
         }`}
       >
