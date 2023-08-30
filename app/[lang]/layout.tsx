@@ -1,11 +1,12 @@
-import Navbar from "../../components/partials/Navbar";
 import "./globals.css";
+import Navbar from "../../components/partials/Navbar";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import Footer from "../../components/partials/Footer";
 import { Providers } from "../../store/provider";
 import { Locale, i18n } from "../../i18n.config";
 import { getDictionary } from "../../utils/dictionaries";
+
 
 //FONT
 const rubik = Rubik({
@@ -40,10 +41,10 @@ export default async function RootLayout({
       </head>
       <Providers>
         <body
-          className={`flex flex-col min-h-screen bg-primary_color   ${rubik.className}`}
+          className={`flex relative flex-col min-h-screen bg-primary_color  ${rubik.className}`}
         >
           <Navbar languages={languages.navigation} />
-          <div className="mx-8 lg:mx-32 my-4 lg:my-12 3xl:w-2/3 3xl:mx-auto">
+          <div className="mx-8 md:mx-16 lg:mx-32 my-4 lg:my-12 3xl:w-2/3 3xl:mx-auto">
             {children}
           </div>
           <Footer />

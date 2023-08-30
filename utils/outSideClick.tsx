@@ -1,9 +1,16 @@
 export const outSideClick = (
   refItem: React.RefObject<HTMLElement>,
-  setter: React.Dispatch<React.SetStateAction<string>>
+  setter: React.Dispatch<React.SetStateAction<string>>,
+  buttonId: string
 ) => {
   function handleClickOutside(e: MouseEvent) {
-    if (refItem.current && !refItem.current.contains(e.target as Node)) {
+    const buttonElement = document.getElementById(buttonId);
+    if (
+      refItem.current &&
+      !refItem.current.contains(e.target as Node) &&
+      buttonElement &&
+      !buttonElement.contains(e.target as Node)
+    ) {
       setter("");
     }
   }
