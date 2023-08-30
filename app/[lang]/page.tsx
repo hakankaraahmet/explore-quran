@@ -2,7 +2,7 @@ import HomePage from "../../containers/HomePage";
 
 export default async function Home() {
   return (
-    <main className=''>
+    <main>
       <HomePage/>
     </main>
   )
