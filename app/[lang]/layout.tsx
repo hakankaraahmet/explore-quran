@@ -44,9 +44,9 @@ export default async function RootLayout({
           className={`flex relative flex-col min-h-screen bg-primary_color  ${rubik.className}`}
         >
           <Navbar languages={languages.navigation} />
-          <div className="mx-8 md:mx-16 lg:mx-32 my-4 lg:my-12 3xl:w-2/3 3xl:mx-auto">
+
             {children}
-          </div>
+
           <Footer />
         </body>
       </Providers>

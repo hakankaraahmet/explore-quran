@@ -52,7 +52,7 @@ const Navbar = ({ languages }: { languages: any }) => {
     <nav
       className={`relative  flex flex-wrap items-center justify-between  py-3 bg-secondary_color md:bg-gradient-to-l from-tertiary_color to-secondary_color drop-shadow-xl `}
     >
-      <div className="w-full mx-8 md:mx-16 lg:mx-32 flex  items-center justify-between  3xl:w-2/3 3xl:mx-auto">
+      <div className="w-full  flex  items-center justify-between common-breakpoint ">
         <div className="w-full relative flex justify-between items-center ">
           <Link
             href="/"

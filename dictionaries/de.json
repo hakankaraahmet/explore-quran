@@ -7,8 +7,11 @@
     "english": "Englisch",
     "turkish": "Türkisch",
     "german": "Deutsch"
+  
   },
   "page": {
-    "home": {}
+    "home": {
+      "searchForSura" : "Suche nach Sure..."
+    }
   }
 }

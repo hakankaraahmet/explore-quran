@@ -9,6 +9,8 @@
     "german": "Almanca"
   },
   "page": {
-    "home": {}
+    "home": {
+      "searchForSura" : "Sure arayın..."
+    }
   }
 }

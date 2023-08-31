@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import CardStar from "../../icons/CardStar";
 import localFont from "next/font/local";

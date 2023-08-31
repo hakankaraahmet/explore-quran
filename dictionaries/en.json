@@ -1,14 +1,16 @@
 {
-    "navigation": {
-      "home": "Home",
-      "about": "About",
-      "translations" : "translations",
-      "login" : "Login",
-      "english" : "English",
-      "turkish" : "Turkish",
-      "german" : "German"
-    },
-    "page": {
-      "home": {}
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "translations": "translations",
+    "login": "Login",
+    "english": "English",
+    "turkish": "Turkish",
+    "german": "German"
+  },
+  "page": {
+    "home": {
+      "searchForSura": "Search for sura..."
     }
   }
+}

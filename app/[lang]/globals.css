@@ -2,4 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .common-breakpoint {
+    @apply mx-8 md:mx-16 lg:mx-32;
+  }
+}
 
+
+/* For Large Screens */
+@media (min-width: 3000px) {
+  .common-breakpoint {
+    margin:auto;
+    width: 60%;
+  }
+}
