@@ -11,7 +11,8 @@
   },
   "page": {
     "home": {
-      "searchForSura" : "Suche nach Sure..."
+      "searchForSura" : "Suche nach Sure...",
+      "verse" : "Vers"
     }
   }
 }

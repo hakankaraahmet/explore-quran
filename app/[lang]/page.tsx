@@ -1,14 +1,14 @@
+import Search from "../../components/shared/Search";
 import HomePage from "../../containers/HomePage";
 import { Locale } from "../../i18n.config";
-import { getDictionary } from "../../utils/dictionaries";
+import getData from "../../utils/getServerSideData";
 
 export default async function Home({ params }: { params: { lang: Locale } }) {
-  const dictionary = await getDictionary(params.lang);
-
-
+  const surasList = await getData({ url: `${process.env.BASE_URL}/chapters` });
   return (
     <main>
-      <HomePage dictionary={dictionary.page.home}/>
+      <Search params={params} />
+      <HomePage data={surasList.chapters} />
     </main>
   );
 }

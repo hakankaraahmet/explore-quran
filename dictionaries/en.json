@@ -10,7 +10,8 @@
   },
   "page": {
     "home": {
-      "searchForSura": "Search for sura..."
+      "searchForSura": "Search for sura...",
+      "verse" : "verse"
     }
   }
 }

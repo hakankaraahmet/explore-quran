@@ -10,7 +10,8 @@
   },
   "page": {
     "home": {
-      "searchForSura" : "Sure arayın..."
+      "searchForSura" : "Sure arayın...",
+      "verse" : "ayet"
     }
   }
 }
