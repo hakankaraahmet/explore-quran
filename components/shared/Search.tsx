@@ -1,14 +1,15 @@
+"use client";
 import React, { FC } from "react";
 import Image from "next/image";
-import { getDictionary } from "../../utils/dictionaries";
-import { Locale } from "../../i18n.config";
+import useLanguage from "../../hooks/useLanguage";
 
 interface ISearch {
-    params?: { lang: Locale };
-  }
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+}
 
-const Search : FC<ISearch> = async ({ params }) => {
-  const dictionary = params && await getDictionary(params.lang);
+const Search: FC<ISearch> = ({ searchValue, setSearchValue }) => {
+  const { dictionary } = useLanguage();
   return (
     <div className="w-full flex flex-col justify-center items-center bg-cover bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05]">
       <Image
@@ -20,6 +21,10 @@ const Search : FC<ISearch> = async ({ params }) => {
       <div className="mb-8 w-[90%] md:w-1/2 rounded-3xl border-2">
         <input
           placeholder={dictionary?.page.home.searchForSura}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(e.target.value)
+          }
+          value={searchValue}
           className="w-full p-4 text-sm md:text-base lg:text-2xl rounded-3xl focus:ring-secondary_color focus:border-secondary_color outline-secondary_color border-2 border-secondary_color"
         />
       </div>

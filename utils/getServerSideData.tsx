@@ -1,9 +1,12 @@
+import { Locale } from "../i18n.config";
+
 interface IGetData {
   url: string;
+  language: Locale;
 }
 
-const getData = async ({ url }: IGetData) => {
-  const res = await fetch(url);
+const getData = async ({ url, language }: IGetData) => {
+  const res = await fetch(`${url}?language=${language}`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");

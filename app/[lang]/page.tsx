@@ -4,11 +4,13 @@ import { Locale } from "../../i18n.config";
 import getData from "../../utils/getServerSideData";
 
 export default async function Home({ params }: { params: { lang: Locale } }) {
-  const surasList = await getData({ url: `${process.env.BASE_URL}/chapters` });
+  const surasList = await getData({
+    url: `${process.env.BASE_URL}/chapters`,
+    language: params.lang,
+  });
   return (
     <main>
-      <Search params={params} />
-      <HomePage data={surasList.chapters} />
+      <HomePage data={surasList.chapters}/>
     </main>
   );
 }

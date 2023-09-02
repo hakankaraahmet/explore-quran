@@ -1,23 +1,16 @@
+"use client";
 import React from "react";
 import CardStar from "../../icons/CardStar";
 import localFont from "next/font/local";
 import { ISura } from "../../../utils/types/Sura";
-import { getDictionary } from "../../../utils/dictionaries";
-import { Locale } from "../../../i18n.config";
-import { headers } from "next/headers";
+import useLanguage from "../../../hooks/useLanguage";
 
 const quranFont = localFont({
   src: "../../../public/fonts/khodijah/Khodijah Free.ttf",
 });
 
-const SurahCard = async ({ sura }: { sura: ISura }) => {
-  const headersList = headers();
-  const activeLocale: Locale = headersList
-    .get("x-invoke-path")
-    ?.replace("/", "") as Locale;
-  const dictionary = await getDictionary(activeLocale);
-
-
+const SurahCard = ({ sura }: { sura: ISura }) => {
+  const { dictionary } = useLanguage();
 
   return (
     <div
@@ -31,8 +24,10 @@ const SurahCard = async ({ sura }: { sura: ISura }) => {
             {sura.id}
           </span>
         </div>
-        <h2 className={`font-bold text-center 2xl:text-lg ${quranFont.className}`}>
-          {sura.name_simple}
+        <h2
+          className={`font-bold text-center 2xl:text-lg ${quranFont.className}`}
+        >
+          {sura.translated_name.name}
         </h2>
       </div>
       <div className="w-2/5 h-full flex flex-col justify-center items-end">

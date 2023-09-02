@@ -145,19 +145,6 @@ const Navbar = ({ languages }: { languages: any }) => {
                           />
                           {languages.english}
                         </Link>
-                        <Link
-                          href={redirectedPathName("de")}
-                          className="flex items-center"
-                        >
-                          <Image
-                            src={"/images/flagGermany.svg"}
-                            alt={languages.german}
-                            width={12}
-                            height={6}
-                            className="mr-2 -ml-2"
-                          />
-                          {languages.german}
-                        </Link>
                       </div>
                     </Tooltip>
                   </span>
