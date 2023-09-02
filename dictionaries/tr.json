@@ -10,7 +10,9 @@
   "page": {
     "home": {
       "searchForSura" : "Sure arayın...",
-      "verse" : "ayet"
+      "verse" : "ayet",
+      "read": "Okuma",
+      "meaning": "meâli"
     }
   }
 }

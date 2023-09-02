@@ -9,7 +9,7 @@ interface IButton {
 const Button: React.FC<IButton> = ({ title, onClick, className }) => {
   return (
     <button
-      className={`bg-primary_color text-secondary_color w-fit px-8 py-2 rounded-2xl font-bold ${className}`}
+      className={`bg-secondary_color text-primary_color hover:bg-primary_color hover:text-secondary_color hover:outline px-8 py-2 capitalize rounded-2xl font-bold ${className}`}
       onClick={onClick}
     >
       {title}

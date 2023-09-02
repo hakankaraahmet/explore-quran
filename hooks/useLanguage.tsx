@@ -4,7 +4,9 @@ import { Locale } from "../i18n.config";
 
 const useLanguage = () => {
   const [dictionary, setDictionary] = useState<any>();
-  const currentLang: Locale = global?.window?.location?.pathname.split("/")[1] as Locale;
+  const currentLang: Locale = global?.window?.location?.pathname.split(
+    "/"
+  )[1] as Locale;
 
   useEffect(() => {
     (async function fetchlanguage() {
@@ -14,7 +16,7 @@ const useLanguage = () => {
     })();
   }, [global?.window?.location?.pathname]);
 
-  return {dictionary};
+  return { currentLang, dictionary };
 };
 
 export default useLanguage;

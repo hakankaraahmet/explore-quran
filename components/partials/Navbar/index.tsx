@@ -9,6 +9,7 @@ import Tooltip from "../../shared/Tooltip";
 import { outSideClick } from "../../../utils/outSideClick";
 import { GiHamburgerMenu } from "react-icons/gi";
 import SideBar from "../SideBar";
+import useLanguage from "../../../hooks/useLanguage";
 
 const quranFont = localFont({
   src: "../../../public/fonts/khodijah/Khodijah Free.ttf",
@@ -21,14 +22,12 @@ const Navbar = ({ languages }: { languages: any }) => {
   const [sideBarOpen, setSideBarOpen] = useState<string>("");
   const translationRef = useRef<HTMLInputElement>(null);
   const sideBarRef = useRef<HTMLInputElement>(null);
+  const { currentLang } = useLanguage();
 
   useEffect(() => {
-    outSideClick(translationRef, setTooltipValue, 'translation_button');
-    outSideClick(sideBarRef, setSideBarOpen , 'side_bar_button');
-  }, [translationRef , sideBarRef]);
-
-
-
+    outSideClick(translationRef, setTooltipValue, "translation_button");
+    outSideClick(sideBarRef, setSideBarOpen, "side_bar_button");
+  }, [translationRef, sideBarRef]);
 
   // LANGUAGE SWITCHER
   const redirectedPathName = (locale: string) => {
@@ -55,7 +54,7 @@ const Navbar = ({ languages }: { languages: any }) => {
       <div className="w-full  flex  items-center justify-between common-breakpoint ">
         <div className="w-full relative flex justify-between items-center ">
           <Link
-            href="/"
+            href={`/${currentLang}`}
             className=" text-xl uppercase text-primary_color flex items-center tracking-wider font-bold"
           >
             <span className="mr-4 scale-150 mt-1">
@@ -75,7 +74,7 @@ const Navbar = ({ languages }: { languages: any }) => {
               item.link ? (
                 <Link
                   key={item.id}
-                  href={item.link}
+                  href={`/${currentLang}/${item.link}`}
                   className={`hidden md:block relative ml-2 scale-150 lg:mt-[1px] cursor-pointer hover:opacity-100 ${
                     item.link === activePathName ? "opacity-100" : "opacity-60"
                   }`}
@@ -96,7 +95,7 @@ const Navbar = ({ languages }: { languages: any }) => {
                     <button
                       className="md:hidden mr-4 text-primary_color cursor-pointer text-xl leading-none py-1  rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                       type="button"
-                      id='side_bar_button'
+                      id="side_bar_button"
                       onClick={handleSideBar}
                     >
                       <GiHamburgerMenu />
@@ -104,7 +103,7 @@ const Navbar = ({ languages }: { languages: any }) => {
                   }
                   <span
                     onClick={() => setTooltipValue(item.name)}
-                    id='translation_button'
+                    id="translation_button"
                     ref={translationRef}
                     className={`md:ml-2 scale-150 lg:mt-[1px]  cursor-pointer  ${
                       tooltipValue === `translation`

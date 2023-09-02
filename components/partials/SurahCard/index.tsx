@@ -4,16 +4,18 @@ import CardStar from "../../icons/CardStar";
 import localFont from "next/font/local";
 import { ISura } from "../../../utils/types/Sura";
 import useLanguage from "../../../hooks/useLanguage";
+import Link from "next/link";
 
 const quranFont = localFont({
   src: "../../../public/fonts/khodijah/Khodijah Free.ttf",
 });
 
 const SurahCard = ({ sura }: { sura: ISura }) => {
-  const { dictionary } = useLanguage();
+  const { dictionary, currentLang } = useLanguage();
 
   return (
-    <div
+    <Link
+      href={`/${currentLang}/${sura.id}`}
       key={sura.id}
       className="surah-card border-2 text-tertiary_color border-tertiary_color hover:bg-tertiary_color hover:text-primary_color p-2 flex items-center justify-between rounded-xl cursor-pointer "
     >
@@ -37,7 +39,7 @@ const SurahCard = ({ sura }: { sura: ISura }) => {
           <h4 className="ml-1 capitalize">{dictionary?.page?.home?.verse}</h4>
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

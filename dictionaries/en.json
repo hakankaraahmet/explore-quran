@@ -10,7 +10,9 @@
   "page": {
     "home": {
       "searchForSura": "Search for sura...",
-      "verse" : "verse"
+      "verse": "verse",
+      "read": "Read",
+      "meaning": "meaning"
     }
   }
 }

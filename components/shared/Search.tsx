@@ -4,8 +4,8 @@ import Image from "next/image";
 import useLanguage from "../../hooks/useLanguage";
 
 interface ISearch {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
+  searchValue?: string;
+  setSearchValue?: (value: string) => void;
 }
 
 const Search: FC<ISearch> = ({ searchValue, setSearchValue }) => {
@@ -22,9 +22,9 @@ const Search: FC<ISearch> = ({ searchValue, setSearchValue }) => {
         <input
           placeholder={dictionary?.page.home.searchForSura}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchValue(e.target.value)
+            setSearchValue && setSearchValue(e.target.value)
           }
-          value={searchValue}
+          value={searchValue && searchValue}
           className="w-full p-4 text-sm md:text-base lg:text-2xl rounded-3xl focus:ring-secondary_color focus:border-secondary_color outline-secondary_color border-2 border-secondary_color"
         />
       </div>
