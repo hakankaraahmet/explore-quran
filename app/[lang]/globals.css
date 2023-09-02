@@ -16,3 +16,15 @@
     width: 60%;
   }
 }
+
+/* Icon Hover */
+.svg-icon{
+  fill: #1a2333;
+}
+.surah-card:hover .svg-icon{
+  fill: #edf0f0;
+  transform: rotate(90deg);
+  transition-property: all;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}

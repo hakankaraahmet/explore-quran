@@ -1,19 +1,16 @@
 import React from "react";
 
-const CardStar = ({ isHover }: { isHover: boolean }) => {
+const CardStar = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={isHover ? "#edf0f0" : "#1a2333"}
       version="1.1"
       x="0px"
       y="0px"
       viewBox="0 0 100 100"
       width={70}
       height={70}
-      className={
-        isHover ? "rotate-90 transition-all duration-2000 ease-in-out" : ""
-      }
+      className={"svg-icon"}
     >
       <g>
         <path d="M75.9,24.1l-15.2,0L50,13.3L39.3,24.1H24.1l0,15.2L13.3,50l10.7,10.7v15.2l15.2,0L50,86.7l10.7-10.7h15.2l0-15.2L86.7,50   L75.9,39.3V24.1z M73,60.7V73H60.7c-0.8,0-1.5,0.3-2.1,0.9L50,82.5l-8.7-8.7C40.8,73.3,40,73,39.3,73H27V60.7   c0-0.8-0.3-1.5-0.9-2.1L17.5,50l8.7-8.7c0.6-0.6,0.9-1.3,0.9-2.1V27h12.3c0.8,0,1.5-0.3,2.1-0.9l8.7-8.7l8.7,8.7   c0.6,0.6,1.3,0.9,2.1,0.9H73v12.3c0,0.8,0.3,1.5,0.9,2.1l8.7,8.7l-8.7,8.7C73.3,59.2,73,60,73,60.7z" />
