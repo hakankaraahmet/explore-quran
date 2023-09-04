@@ -1,4 +1,3 @@
-import React from "react";
 import getData from "../../../utils/getServerSideData";
 import SurahPage from "../../../containers/SuraPage";
 
@@ -9,7 +8,7 @@ const Sura = async ({ params }: { params: any }) => {
   });
 
   return (
-    <div className="w-full bg-contain bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05]">
+    <div>
       <SurahPage suraInfo={suraInfo.chapter} />
     </div>
   );

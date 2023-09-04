@@ -11,7 +11,7 @@ interface ISearch {
 const Search: FC<ISearch> = ({ searchValue, setSearchValue }) => {
   const { dictionary } = useLanguage();
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-cover bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05]">
+    <div className="w-full flex flex-col justify-center items-center bg-contain bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05]">
       <Image
         src={"/images/bismillah_logo.svg"}
         alt="explore quran"

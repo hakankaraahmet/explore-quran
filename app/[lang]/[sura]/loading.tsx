@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
+import MainLoadingSkeleton from "../../../components/partials/MainLoadingSkeleton";
+
 
 const Loading = () => {
   return (
-    <div>
-      Loading...
-    </div>
-  )
-}
+    <MainLoadingSkeleton/>
+  );
+};
 
-export default Loading
+export default Loading;
