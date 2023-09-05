@@ -23,6 +23,11 @@ const quranFont = localFont({
 const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState<number>(0);
+
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+  const [playingVerseId, setPlayingVerseId] = useState<number>();
+
   const { dictionary, currentLang } = useLanguage();
   const router = useRouter();
 
@@ -39,12 +44,49 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
 
   const { data } = useFetch(url);
 
+  //AUDIO TOGGLING
+  const toggle = (verse: IVerseInfo) => {
+    const audioElement = new Audio(
+      `https://verses.quran.com/${verse.audio.url}`
+    );
+
+
+    //CLICKING AT THE SAME VERSE
+    if (playingVerseId === verse.id) {
+      if (isPlaying) {
+        audio?.pause();
+      } else {
+        audio?.play();
+      }
+    }
+
+    //CLICKING ANOTHER VERSE
+    if (playingVerseId !== verse.id) {
+      setPlayingVerseId(verse.id);
+
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
+      setAudio(audioElement);
+      audioElement.play();
+    }
+
+    audioElement.addEventListener("play", () => setIsPlaying(true));
+    audioElement.addEventListener("pause", () => setIsPlaying(false));
+    audioElement.addEventListener("ended", () => setIsPlaying(false));
+  };
+
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col z-10">
       <div className="relative ">
-      <button className="absolute top-4 left-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color" onClick={router.back}>
-        <GrLinkPrevious size={16} />
-      </button>
+        <button
+          className="absolute top-4 left-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color"
+          onClick={router.back}
+        >
+          <GrLinkPrevious size={16} />
+        </button>
       </div>
       <div className="flex flex-col items-center  bg-contain bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05] ">
         <h1 className={`my-4 text-xl md:text-3xl ${quranFont.className}`}>
@@ -67,7 +109,16 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
       <div className="my-8 grid grid-cols-1 gap-y-4 relative">
         <GoDownButton />
         {data &&
-          data?.verses?.map((verse: IVerseInfo) => <VerseCard verse={verse} />)}
+          data?.verses?.map((verse: IVerseInfo) => {
+            return (
+              <VerseCard
+                verse={verse}
+                toggle={toggle}
+                playingVerseId={playingVerseId}
+                isPlaying={isPlaying}
+              />
+            );
+          })}
       </div>
       <div className="my-4">
         <CustomPagination

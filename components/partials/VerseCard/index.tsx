@@ -1,57 +1,33 @@
 "use client";
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlayCircle } from "react-icons/bi";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { IVerseInfo } from "../../../utils/types/Verse";
 
-const VerseCard = ({ verse }: { verse: IVerseInfo }) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [audio, setAudio] = useState<any>();
-
-  useEffect(() => {
-    const audioElement = new Audio(
-      `https://verses.quran.com/${verse.audio.url}`
-    );
-    setAudio(audioElement);
-
-    audioElement.addEventListener("ended", () => {
-      console.log("Audio playback ended");
-      setIsPlaying(false);
-      console.log("audio :>> ", audio);
-    });
-
-    return () => {
-      audioElement.removeEventListener("ended", () => {});
-    };
-  }, [verse]);
-
-  const togglePlay = () => {
-    if (audio ) {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  // AUDIO BIRI BASLATILINCA DIGERINI DURDURMA OLAYI
-  // SAYFA DEGISTIRINCE AUDIONUN KAPANMASI
-  // FARKLI SENARYOLARI CHECK ET
-  //AUDIO CALARKEN YAZININ RENGININ DEGISMESI
-
+const VerseCard = ({
+  verse,
+  toggle,
+  isPlaying,
+  playingVerseId,
+}: {
+  verse: IVerseInfo;
+  toggle: (verse: IVerseInfo) => void;
+  isPlaying: boolean;
+  playingVerseId: number | undefined;
+}) => {
   return (
     <div
-      className="common-breakpoint border-2 rounded-3xl flex justify-between p-4"
+      className={`common-breakpoint border-2 rounded-3xl flex justify-between p-4 ${
+        isPlaying &&
+        verse.id === playingVerseId &&
+        "text-green-700 border-green-700"
+      }`}
       key={verse.id}
+      onClick={() => toggle(verse)}
     >
       <div className="w-[10%] flex flex-col items-center justify-center p-2">
-        <button
-          className="rounded-full"
-          onClick={togglePlay}
-        >
-          {isPlaying ? (
+        <button className="rounded-full">
+          {isPlaying && verse.id === playingVerseId ? (
             <AiOutlinePauseCircle size={32} />
           ) : (
             <BiPlayCircle size={32} />
@@ -59,7 +35,7 @@ const VerseCard = ({ verse }: { verse: IVerseInfo }) => {
         </button>
       </div>
       <div className="w-[90%] flex flex-col p-2">
-        <div className="py-2 md:py-4 px-2 text-2xl md:text-4xl" dir="rtl">
+        <div className={`py-2 md:py-4 px-2 text-2xl md:text-4xl `} dir="rtl">
           {verse.text_uthmani}
         </div>
         <div className="py-2 md:py-4  text-base md:text-xl flex flex-wrap">

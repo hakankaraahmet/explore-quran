@@ -18,7 +18,7 @@ const SideBar = ({
       ref={sideBarRef}
       className={`${
         sideBarOpen ? "translate-x-0 " : "-translate-x-full  "
-      } md:hidden bg-secondary_color absolute  w-1/2 top-[4.6rem] bottom-0  h-[calc(100vh-4.6rem)]  z-40 transition-all duration-300`}
+      } md:hidden bg-secondary_color fixed w-1/2 mt-[4.6rem] top-0 bottom-0  h-[calc(100vh-4.6rem)]  transition-all duration-300`}
     >
       <div
         className={`text-primary_color transition-all duration-1000 my-2 mx-8`}
