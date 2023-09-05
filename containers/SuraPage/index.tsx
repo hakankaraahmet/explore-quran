@@ -1,14 +1,16 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Button from "../../components/shared/Button";
 import { ISura } from "../../utils/types/Sura";
 import useLanguage from "../../hooks/useLanguage";
 import localFont from "next/font/local";
 import VerseCard from "../../components/partials/VerseCard";
-import { IVerse, IVerseInfo, IWord } from "../../utils/types/Verse";
+import { IVerseInfo } from "../../utils/types/Verse";
 import CustomPagination from "../../components/partials/CustomPagination";
 import useFetch from "../../hooks/useFetch";
-import MainLoadingSkeleton from "../../components/partials/MainLoadingSkeleton";
+import { GrLinkPrevious } from "react-icons/gr";
+import { useRouter } from "next/navigation";
+import GoDownButton from "../../components/shared/GoDownButton";
 
 interface ISurahPage {
   suraInfo: ISura;
@@ -22,6 +24,7 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState<number>(0);
   const { dictionary, currentLang } = useLanguage();
+  const router = useRouter();
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -30,14 +33,19 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   // DATA FETCHING
   const url = `https://api.quran.com/api/v4/verses/by_chapter/${
     suraInfo.id
-  }?${currentLang}words=true&fields=text_uthmani&translations=${
+  }?language=${currentLang}&words=true&fields=text_uthmani&audio=10&translations=${
     currentLang === "en" ? "167" : "77"
   }&per_page=50&page=${currentPage}`;
 
   const { data } = useFetch(url);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
+      <div className="relative ">
+      <button className="absolute top-4 left-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color" onClick={router.back}>
+        <GrLinkPrevious size={16} />
+      </button>
+      </div>
       <div className="flex flex-col items-center  bg-contain bg-no-repeat bg-center  bg-[url('/images/main_page_background.svg')] bg-secondary_color bg-opacity-[0.05] ">
         <h1 className={`my-4 text-xl md:text-3xl ${quranFont.className}`}>
           {suraInfo.translated_name.name}
@@ -56,7 +64,8 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
           />
         </div>
       </div>
-      <div className="my-8 grid grid-cols-1 gap-y-4">
+      <div className="my-8 grid grid-cols-1 gap-y-4 relative">
+        <GoDownButton />
         {data &&
           data?.verses?.map((verse: IVerseInfo) => <VerseCard verse={verse} />)}
       </div>

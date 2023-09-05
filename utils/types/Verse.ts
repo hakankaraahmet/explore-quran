@@ -6,6 +6,7 @@ export interface IVerse {
 
 export interface IVerseInfo {
   id: number;
+  audio : IAudio;
   verse_number: number;
   verse_key: string;
   hizb_number: number;
@@ -55,4 +56,9 @@ export interface ITranslation {
   id: number
   resource_id: number
   text: string
+}
+
+export interface IAudio {
+  segments : number[],
+  url: string
 }
