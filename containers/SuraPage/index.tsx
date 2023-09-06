@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import Button from "../../components/shared/Button";
 import { ISura } from "../../utils/types/Sura";
 import useLanguage from "../../hooks/useLanguage";
@@ -23,7 +23,6 @@ const quranFont = localFont({
 const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState<number>(0);
-
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [audio, setAudio] = useState<HTMLAudioElement>();
   const [playingVerseId, setPlayingVerseId] = useState<number>();
@@ -38,7 +37,7 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   // DATA FETCHING
   const url = `https://api.quran.com/api/v4/verses/by_chapter/${
     suraInfo.id
-  }?language=${currentLang}&words=true&fields=text_uthmani&audio=10&translations=${
+  }?language=${currentLang}&words=true&fields=text_uthmani&word_fields=text_uthmani&audio=10&translations=${
     currentLang === "en" ? "167" : "77"
   }&per_page=50&page=${currentPage}`;
 
@@ -49,7 +48,6 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
     const audioElement = new Audio(
       `https://verses.quran.com/${verse.audio.url}`
     );
-
 
     //CLICKING AT THE SAME VERSE
     if (playingVerseId === verse.id) {
@@ -79,11 +77,11 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
   };
 
   return (
-    <div className="flex flex-col z-10">
+    <div className="flex flex-col z-10 mt-16 md:mt-0">
       <div className="relative ">
         <button
-          className="absolute top-4 left-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color"
-          onClick={router.back}
+          className="absolute top-4 left-8 border-2 rounded-xl p-1 border-secondary_color focus:border-secondary_color"
+          onClick={() => router.push(`/${currentLang}`)}
         >
           <GrLinkPrevious size={16} />
         </button>
@@ -108,24 +106,30 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
       </div>
       <div className="my-8 grid grid-cols-1 gap-y-4 relative">
         <GoDownButton />
-        {data &&
-          data?.verses?.map((verse: IVerseInfo) => {
-            return (
-              <VerseCard
-                verse={verse}
-                toggle={toggle}
-                playingVerseId={playingVerseId}
-                isPlaying={isPlaying}
+
+        {activeButton === 0 ? (
+          <div>
+            {data?.verses?.map((verse: IVerseInfo) => {
+              return (
+                <VerseCard
+                  verse={verse}
+                  toggle={toggle}
+                  playingVerseId={playingVerseId}
+                  isPlaying={isPlaying}
+                />
+              );
+            })}
+            <div className="my-4">
+              <CustomPagination
+                totalItems={data?.pagination?.total_records}
+                itemsPerPage={data?.pagination?.per_page}
+                onPageChange={handlePageChange}
               />
-            );
-          })}
-      </div>
-      <div className="my-4">
-        <CustomPagination
-          totalItems={data?.pagination?.total_records}
-          itemsPerPage={data?.pagination?.per_page}
-          onPageChange={handlePageChange}
-        />
+            </div>
+          </div>
+        ) : (
+          <div>Okuma Bolumu</div>
+        )}
       </div>
     </div>
   );

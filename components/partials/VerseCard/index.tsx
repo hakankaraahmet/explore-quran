@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
 import { BiPlayCircle } from "react-icons/bi";
 import { AiOutlinePauseCircle } from "react-icons/ai";
-import { IVerseInfo } from "../../../utils/types/Verse";
+import { IVerseInfo, IWord } from "../../../utils/types/Verse";
+import Tooltip from "../../shared/Tooltip";
+import { useState } from "react";
 
 const VerseCard = ({
   verse,
@@ -15,9 +16,10 @@ const VerseCard = ({
   isPlaying: boolean;
   playingVerseId: number | undefined;
 }) => {
+  const [tooltipValue, setTooltipValue] = useState<number | null >(null);
   return (
     <div
-      className={`common-breakpoint border-2 rounded-3xl flex justify-between p-4 ${
+      className={`common-breakpoint border-2 rounded-3xl flex  justify-between p-4 ${
         isPlaying &&
         verse.id === playingVerseId &&
         "text-green-700 border-green-700"
@@ -35,9 +37,30 @@ const VerseCard = ({
         </button>
       </div>
       <div className="w-[90%] flex flex-col p-2">
-        <div className={`py-2 md:py-4 px-2 text-2xl md:text-4xl `} dir="rtl">
-          {verse.text_uthmani}
+        <div
+          className={`py-2 md:py-4 flex flex-wrap gap-1 md:gap-3    text-2xl md:text-4xl `}
+          dir="rtl"
+          // onMouseOver={() => handleHover(verse.id)}
+          // onMouseLeave={() => handleHover(null)}
+        >
+          {verse.words.map((item: IWord) => (
+            <span
+              className=" relative cursor-pointer"
+              onMouseEnter={() => setTooltipValue(item.id)}
+              onMouseLeave={() => setTooltipValue(null)}
+            >
+              {item.text_uthmani}
+              <span className=" absolute top-8 lg:top-12 flex  left-[50%] translate-x-[-50%] z-10 " dir="ltr">
+              {tooltipValue === item.id ? (
+                <span className="text-secondary_color bg-primary_color border-2 border-secondary_color  rounded-3xl text-sm py-2 px-4">
+                  {item.translation.text}
+                </span>
+              ) : ''}
+              </span>
+            </span>
+          ))}
         </div>
+        <span className="text-sm text-right"></span>
         <div className="py-2 md:py-4  text-base md:text-xl flex flex-wrap">
           <span className="mr-2">({verse.verse_number})</span>{" "}
           <p dangerouslySetInnerHTML={{ __html: verse.translations[0].text }} />

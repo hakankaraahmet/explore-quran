@@ -31,10 +31,10 @@ const GoDownButton = () => {
 
   return (
     <button
-      className={`fixed right-2 md:right-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color ${
+      className={`fixed right-[1px] p-1 md:right-8 border-2 rounded-xl md:p-1 border-secondary_color focus:border-secondary_color ${
         isHalfway
           ? "bottom-36 md:bottom-20 rotate-180 transition-all ease-in-out"
-          : "top-20 mt-2"
+          : "top-20 md:mt-2 "
       }`}
       onClick={() =>
         window.scroll({

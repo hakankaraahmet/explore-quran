@@ -6,7 +6,7 @@ export interface IVerse {
 
 export interface IVerseInfo {
   id: number;
-  audio : IAudio;
+  audio: IAudio;
   verse_number: number;
   verse_key: string;
   hizb_number: number;
@@ -18,7 +18,7 @@ export interface IVerseInfo {
   page_number: number;
   juz_number: number;
   words: IWord[];
-  translations : ITranslation[]
+  translations: ITranslation[];
 }
 
 export interface IWord {
@@ -30,6 +30,7 @@ export interface IWord {
   page_number: number;
   line_number: number;
   text: string;
+  text_uthmani: string;
   translation: ITranslationWord;
   transliteration: ITransliteration;
 }
@@ -53,12 +54,12 @@ export interface IPagination {
 }
 
 export interface ITranslation {
-  id: number
-  resource_id: number
-  text: string
+  id: number;
+  resource_id: number;
+  text: string;
 }
 
 export interface IAudio {
-  segments : number[],
-  url: string
+  segments: number[];
+  url: string;
 }
