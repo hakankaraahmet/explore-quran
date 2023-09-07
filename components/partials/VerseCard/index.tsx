@@ -2,7 +2,6 @@
 import { BiPlayCircle } from "react-icons/bi";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { IVerseInfo, IWord } from "../../../utils/types/Verse";
-import Tooltip from "../../shared/Tooltip";
 import { useState } from "react";
 
 const VerseCard = ({
@@ -19,7 +18,7 @@ const VerseCard = ({
   const [tooltipValue, setTooltipValue] = useState<number | null >(null);
   return (
     <div
-      className={`common-breakpoint border-2 rounded-3xl flex  justify-between p-4 ${
+      className={`common-breakpoint border-2 rounded-3xl flex  justify-between p-4 mt-4 ${
         isPlaying &&
         verse.id === playingVerseId &&
         "text-green-700 border-green-700"
@@ -40,8 +39,6 @@ const VerseCard = ({
         <div
           className={`py-2 md:py-4 flex flex-wrap gap-1 md:gap-3    text-2xl md:text-4xl `}
           dir="rtl"
-          // onMouseOver={() => handleHover(verse.id)}
-          // onMouseLeave={() => handleHover(null)}
         >
           {verse.words.map((item: IWord) => (
             <span
@@ -49,7 +46,7 @@ const VerseCard = ({
               onMouseEnter={() => setTooltipValue(item.id)}
               onMouseLeave={() => setTooltipValue(null)}
             >
-              {item.text_uthmani}
+             <span className="font-serif">{item.text_uthmani}</span> 
               <span className=" absolute top-8 lg:top-12 flex  left-[50%] translate-x-[-50%] z-10 " dir="ltr">
               {tooltipValue === item.id ? (
                 <span className="text-secondary_color bg-primary_color border-2 border-secondary_color  rounded-3xl text-sm py-2 px-4">

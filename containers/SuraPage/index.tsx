@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Button from "../../components/shared/Button";
 import { ISura } from "../../utils/types/Sura";
 import useLanguage from "../../hooks/useLanguage";
@@ -11,6 +11,7 @@ import useFetch from "../../hooks/useFetch";
 import { GrLinkPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import GoDownButton from "../../components/shared/GoDownButton";
+import ReadingPart from "../../components/partials/ReadingPart";
 
 interface ISurahPage {
   suraInfo: ISura;
@@ -21,8 +22,8 @@ const quranFont = localFont({
 });
 
 const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [audio, setAudio] = useState<HTMLAudioElement>();
   const [playingVerseId, setPlayingVerseId] = useState<number>();
@@ -76,6 +77,18 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
     audioElement.addEventListener("ended", () => setIsPlaying(false));
   };
 
+  //TAB CHANGING
+  const handleTab = (id: number) => {
+    setActiveButton(id);
+    global?.window?.sessionStorage.setItem("currentTab", JSON.stringify(id));
+  };
+
+  useEffect(() => {
+    const storedValue = window.sessionStorage.getItem("currentTab");
+    const initialActiveButton = storedValue ? JSON.parse(storedValue) : 0;
+    setActiveButton(initialActiveButton);
+  }, []);
+
   return (
     <div className="flex flex-col z-10 mt-16 md:mt-0">
       <div className="relative ">
@@ -94,20 +107,19 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
         <div className="grid grid-cols-2 gap-x-8 my-4">
           <Button
             title={dictionary?.page.home.meaning}
-            onClick={() => setActiveButton(0)}
+            onClick={() => handleTab(0)}
             isActive={activeButton === 0 ? true : false}
           />
           <Button
             title={dictionary?.page.home.read}
-            onClick={() => setActiveButton(1)}
+            onClick={() => handleTab(1)}
             isActive={activeButton === 1 ? true : false}
           />
         </div>
       </div>
       <div className="my-8 grid grid-cols-1 gap-y-4 relative">
         <GoDownButton />
-
-        {activeButton === 0 ? (
+        {data && activeButton === 0 ? (
           <div>
             {data?.verses?.map((verse: IVerseInfo) => {
               return (
@@ -119,17 +131,17 @@ const SurahPage: FC<ISurahPage> = ({ suraInfo }) => {
                 />
               );
             })}
-            <div className="my-4">
-              <CustomPagination
-                totalItems={data?.pagination?.total_records}
-                itemsPerPage={data?.pagination?.per_page}
-                onPageChange={handlePageChange}
-              />
-            </div>
           </div>
         ) : (
-          <div>Okuma Bolumu</div>
+          <ReadingPart verses={data.verses} />
         )}
+        <div className="my-4">
+          <CustomPagination
+            totalItems={data?.pagination?.total_records}
+            itemsPerPage={data?.pagination?.per_page}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );
