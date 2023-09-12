@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { ISura } from "../../../utils/types/Sura";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IVerseInfo, IWord } from "../../../utils/types/Verse";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { BiPlayCircle } from "react-icons/bi";
@@ -11,33 +10,103 @@ interface IReadingPart {
 
 const ReadingPart = ({ verses }: IReadingPart) => {
   const [tooltipValue, setTooltipValue] = useState<number | null>(null);
+  const [playingVerseId, setPlayingVerseId] = useState<number>();
+  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement>();
+  const [isPaused, setIsPaused] = useState<boolean>(true);
+  const ayahRef = useRef<HTMLDivElement>(null);
+
+  const audioFiles = useMemo(() => {
+    return verses?.map((verse: IVerseInfo) => ({
+      audio: new Audio(`https://verses.quran.com/${verse.audio.url}`),
+      id: verse.id,
+    }));
+  }, [verses]);
+
+  useEffect(() => {
+    if (!playingVerseId) {
+      return;
+    }
+    if (playingAudio) {
+      playingAudio.pause();
+      setIsPaused(true);
+      setPlayingAudio(undefined);
+    }
+
+    setPlayingAudio(() => {
+      const index = audioFiles.findIndex(
+        (audioFile) => audioFile.id === playingVerseId
+      );
+      const audio = audioFiles[index]?.audio;
+      setIsPaused(false);
+      audio?.play();
+      if (audio) {
+        audio.onended = () => {
+          if (index === audioFiles.length - 1) {
+            setIsPaused(true);
+            setPlayingVerseId(undefined);
+            setPlayingAudio(undefined);
+            return;
+          }
+          if (index < audioFiles.length - 1) {
+            setPlayingVerseId(audioFiles[index + 1].id);
+
+            ayahRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+        };
+      }
+      return audio;
+    });
+  }, [playingAudio, playingVerseId, audioFiles]);
+
+  const handlePLayAudio = () => {
+    if (playingAudio) {
+      if (playingAudio.paused) {
+        setIsPaused(false);
+        playingAudio.play();
+        return;
+      }
+      playingAudio.pause();
+      setIsPaused(true);
+      return;
+    }
+    setPlayingVerseId(audioFiles[0].id);
+  };
 
   return (
     <div className="common-breakpoint">
       <div className="flex items-center justify-center flex-col  mt-8">
-        <button className="rounded-full  w-fit">
-          {false ? (
-            <AiOutlinePauseCircle size={32} />
-          ) : (
+        <button className="rounded-full  w-fit" onClick={handlePLayAudio}>
+          {!playingAudio || isPaused ? (
             <BiPlayCircle size={32} />
+          ) : (
+            <AiOutlinePauseCircle size={32} />
           )}
         </button>
-        <p className="text-secondary_color md:text-xl mt-4 text-center">
-          Please double click if you want to listen a spesific verse
-        </p>
       </div>
       <div className="flex gap-2 md:gap-8 flex-wrap  mt-12 " dir="rtl">
         {verses?.map((verse: IVerseInfo) =>
           verse.words.map((item: IWord) => (
             <span
-              className=" relative cursor-pointer "
+              ref={playingVerseId === verse.id ? ayahRef : null}
+              className={`relative cursor-pointer ${
+                playingVerseId === verse.id && "text-green-700"
+              }`}
               onMouseEnter={() => setTooltipValue(item.id)}
               onMouseLeave={() => setTooltipValue(null)}
             >
               <span
-                className={`font-serif ${tooltipValue === item.id && 'text-green-700'} ${
+                className={`font-serif ${
+                  tooltipValue === item.id && "text-green-700"
+                } ${
                   item.char_type_name === "end"
-                    ? "border-2 border-secondary_color text-xl md:text-3xl  w-6 h-6 md:w-12 md:h-12 rounded-full flex items-center justify-center  "
+                    ? `border-2  text-xl md:text-3xl  w-6 h-6 md:w-12 md:h-12 rounded-full flex items-center justify-center ${
+                        playingVerseId === verse.id
+                          ? "border-green-700"
+                          : "border-secondary_color"
+                      } `
                     : "text-2xl md:text-5xl"
                 }`}
               >
