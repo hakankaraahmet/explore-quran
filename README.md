@@ -1,5 +1,5 @@
 # Explore Quran Project
-#https://explore-quran.vercel.app/en
+# https://explore-quran.vercel.app/en
 
 Welcome to the Explore Quran project! This Next.js project is designed to help you explore and interact with the Quranic text.
 
