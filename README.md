@@ -1,6 +1,7 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Explore Quran Project
+#https://explore-quran.vercel.app/en
 
-## Getting Started
+Welcome to the Explore Quran project! This Next.js project is designed to help you explore and interact with the Quranic text.
 
 First, run the development server:
 
