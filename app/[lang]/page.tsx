@@ -5,7 +5,7 @@ import getData from "../../utils/getServerSideData";
 
 export default async function Home({ params }: { params: { lang: Locale } }) {
   const surasList = await getData({
-    url: `${process.env.BASE_URL}/chapters`,
+    url: `https://api.quran.com/api/v4/chapters`,
     language: params.lang,
   });
   return (
